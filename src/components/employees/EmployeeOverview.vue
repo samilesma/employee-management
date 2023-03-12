@@ -54,7 +54,8 @@ export default {
       sorting: {
         field: 'name',
         direction: 'asc'
-      }
+      },
+      searchQuery: ''
     };
   },
   async created() {
@@ -82,7 +83,8 @@ export default {
         }
         return 0
       })
-      return employees
+      
+      return employees.filter(employee => employee.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
     }
   },
   methods: {
