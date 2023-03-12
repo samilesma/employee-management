@@ -1,16 +1,35 @@
 {
-    "employees": [
-      {
-        "id": 1,
-        "name": "John Doe",
-        "title": "Manager",
-        "function": "Driver"
-      },
-      {
-        "id": 2,
-        "name": "Jane Smith",
-        "title": "Sales Associate",
-        "function": "Driver"
-      }
-    ]
-  }
+  "employees": [
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "title": "Sales Associate",
+      "function": "Driver",
+      "workshopId": 1
+    },
+    {
+      "name": "Sibgatullah Samil Batir",
+      "title": "Test",
+      "department": "",
+      "phone": "",
+      "email": "",
+      "workshopId": 2,
+      "function": "Leder",
+      "id": 5
+    }
+  ],
+  "workshops": [
+    {
+      "id": 1,
+      "name": "Værksted A"
+    },
+    {
+      "id": 2,
+      "name": "Værksted B"
+    },
+    {
+      "id": 3,
+      "name": "Værksted C"
+    }
+  ]
+}
