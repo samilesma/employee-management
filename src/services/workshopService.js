@@ -1,14 +1,20 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000";
+const apiClient = axios.create({
+    baseURL: 'http://localhost:3000',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
 
 export default {
   // Get all workshops
   getAllWorkshops() {
-    return axios.get(`${BASE_URL}/workshops`);
+    return apiClient.get('/workshops');
   },
   // Get a single workshop
   getWorkshop(id) {
-    return axios.get(`${BASE_URL}/workshops/${id}`);
+    return apiClient.get(`/workshops/${id}`);
   },
 };
