@@ -21,3 +21,12 @@ npm run serve
 json-server --watch db.json
 npm run build
 ```
+
+## Key binds
+There is a key bind option on the overview. You can navigate trough buttons and the search field using "TAB" and "SHIFT"+"TAB"
+The following keybinds are avaliable (Keybinds won't work on search field):
+* S to focus on search
+* N to order by Navn
+* T to order by Titel
+* A to order by Arbejdsfunktion
+* V to order by Værksted

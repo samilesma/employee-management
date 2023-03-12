@@ -2,8 +2,8 @@
   <div class="container">
     <h1>Medarbejderoversigt</h1>
     <div class="button-group">
+      <input id="searchQuery" type="text" v-model="searchQuery" placeholder="Søg efter navn" />
       <button class="button primary" @click="createEmployee">Opret medarbejder</button>
-      <input type="text" v-model="searchQuery" placeholder="Søg efter navn" />
     </div>
     <table>
       <thead>
@@ -59,7 +59,11 @@ export default {
     };
   },
   async created() {
+    document.addEventListener('keydown', this.handleKeydown)
     this.employees = (await EmployeeService.getAllEmployees()).data
+  },
+  unmounted() {
+    document.removeEventListener('keydown', this.handleKeydown)
   },
   computed: {
     // return a filtered list of employees based on the search query
@@ -109,6 +113,29 @@ export default {
       } else {
         this.sorting.field = field
         this.sorting.direction = 'asc'
+      }
+    },
+    handleKeydown(event) {
+      const isSearchInput =  event.target.id === 'searchQuery';
+      if (isSearchInput) return;
+
+      switch (event.key.toLowerCase()) {
+        case 'n':
+          this.sort('name');
+          break;
+        case 't':
+          this.sort('title');
+          break;
+        case 'a':
+          this.sort('function');
+          break;
+        case 'v':
+          this.sort('workshop.name');
+          break;
+        case 's':
+          event.preventDefault();
+          document.getElementById('searchQuery').focus();
+          break;
       }
     }
   }
