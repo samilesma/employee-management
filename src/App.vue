@@ -1,14 +1,10 @@
 <template>
-  <EmployeeOverview/>
+    <router-view />
 </template>
 
 <script>
-import EmployeeOverview from './components/EmployeeOverview.vue'
 
 export default {
   name: 'App',
-  components: {
-    EmployeeOverview
-  }
 }
 </script>
