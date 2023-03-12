@@ -46,6 +46,7 @@
 
 <script>
 import EmployeeService from '@/services/employeeService';
+import { useToast } from "vue-toastification";
 
 export default {
   data() {
@@ -55,7 +56,8 @@ export default {
         field: 'name',
         direction: 'asc'
       },
-      searchQuery: ''
+      searchQuery: '',
+      showToast: useToast()
     };
   },
   async created() {
@@ -100,7 +102,7 @@ export default {
     async deleteEmployee(id) {
       await EmployeeService.deleteEmployee(id)
       this.employees = this.employees.filter(employee => employee.id !== id)
-      this.showToast('Employee deleted successfully')
+      this.showToast.success('Medarbejderen blev slettet')
     },
     // redirect to the edit employe page
     editEmployee(employee) {

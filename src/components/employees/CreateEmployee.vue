@@ -23,7 +23,7 @@
         </div>
         <div class="button-group">
           <button class="button primary">Opret</button>
-          <button class="button alert" @click="$router.back()">Gå tilbage</button>
+          <button class="button alert" @click.prevent="$router.back()">Gå tilbage</button>
         </div>
       </form>
     </div>
@@ -32,7 +32,7 @@
   <script>
   import employeeService from '@/services/employeeService';
   import workshopService from '@/services/workshopService';
-
+  import { useToast } from "vue-toastification";
   export default {
     data() {
       return {
@@ -42,7 +42,8 @@
           function: '',
           workshopId: ''
         },
-        workshops: []
+        workshops: [],
+        showToast: useToast()
       };
     },
     async created() {
@@ -51,6 +52,8 @@
     methods: {
       async createEmployee() {
         await employeeService.createEmployee(this.employee)
+        this.showToast.success('Medarbejderen er oprettet.')
+
         this.$router.push('/')
       }
     }
