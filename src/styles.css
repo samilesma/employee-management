@@ -8,6 +8,7 @@ body {
 .container {
   margin: 20px auto;
   max-width: 600px;
+  min-width: fit-content;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -17,6 +18,18 @@ body {
 table {
   border-collapse: collapse;
   width: 100%;
+}
+
+table th span {
+  margin-left: 5px;
+}
+
+table th span.asc {
+  content: "\25B2";
+}
+
+table th span.desc {
+  content: "\25BC";
 }
 
 th, td {
@@ -54,20 +67,47 @@ input[type="text"] {
   color: white;
 }
 
-.button.delete {
+.button.alert {
   background-color: #f44336;
 }
 
-.button.edit {
+.button.secondary {
   background-color: #2196f3;
 }
 
-.button.create {
+.button.primary {
   background-color: #4caf50;
   float: right;
 }
 
-
 .button:hover {
   opacity: 0.8;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+label {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+input,
+select {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button.cancel {
+  background-color: #f44336;
+  margin-right: 12px;
 }
