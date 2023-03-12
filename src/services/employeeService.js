@@ -13,6 +13,10 @@ export default {
   getAllEmployees() {
     return apiClient.get('/employees?_expand=workshop');
   },
+  // Get an employee by ID
+  getEmployee(id) {
+    return apiClient.get(`/employees/${id}?_expand=workshop`);
+  },
   // Create a new employee
   createEmployee(employee) {
     return apiClient.post('/employees', employee);
