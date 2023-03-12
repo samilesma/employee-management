@@ -32,6 +32,7 @@
   <script>
   import employeeService from '@/services/employeeService';
   import workshopService from '@/services/workshopService';
+
   export default {
     data() {
       return {
@@ -44,24 +45,14 @@
         workshops: []
       };
     },
-    methods: {
-      createEmployee() {
-        employeeService.createEmployee(this.employee)
-          .then(() => {
-            this.$router.push('/');
-          })
-          .catch(error => console.log(error));
-      },
-      loadWorkshops() {
-        workshopService.getAllWorkshops()
-          .then(response => {
-            this.workshops = response.data;
-          })
-          .catch(error => console.log(error));
-      }
+    async created() {
+      this.workshops = (await workshopService.getAllWorkshops()).data
     },
-    mounted() {
-      this.loadWorkshops();
+    methods: {
+      async createEmployee() {
+        await employeeService.createEmployee(this.employee)
+        this.$router.push('/')
+      }
     }
   };
   </script>
