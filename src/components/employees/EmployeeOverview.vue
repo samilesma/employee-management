@@ -90,7 +90,6 @@ export default {
   methods: {
     // load all employees.
     async loadEmployees() {
-      console.log("Employees Loaded")
       const response = await EmployeeService.getAllEmployees(
         this.page,
         this.pageSize,
@@ -98,7 +97,6 @@ export default {
         this.sorting.field,
         this.sorting.direction.toLowerCase()
       );
-      console.log(response.data);
       this.employees = response.data;
       this.totalEmployees = response.headers['x-total-count'];
     },
