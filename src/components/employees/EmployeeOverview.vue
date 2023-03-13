@@ -2,7 +2,7 @@
   <div class="container">
     <h1>Medarbejderoversigt</h1>
     <div class="button-group">
-      <input id="searchQuery" type="text" v-model="searchQuery" placeholder="Søg efter navn" />
+      <input id="searchQuery" type="text" v-model="searchQuery" placeholder="Søg efter navn" @input="search"/>
       <button class="button primary" @click="createEmployee">Opret medarbejder</button>
     </div>
     <table>
@@ -29,7 +29,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="employee in filteredEmployees" :key="employee.id">
+        <tr v-for="employee in employees" :key="employee.id">
           <td>{{ employee.name }}</td>
           <td>{{ employee.title }}</td>
           <td>{{ employee.function }}</td>
@@ -41,14 +41,23 @@
         </tr>
       </tbody>
     </table>
+    <custom-pagination
+      :current-page="page"
+      :total-pages="totalPages"
+      @page-changed="pageChanged"
+    ></custom-pagination>
   </div>
 </template>
 
 <script>
 import EmployeeService from '@/services/employeeService';
 import { useToast } from "vue-toastification";
+import CustomPagination from '@/components/CustomPagination.vue';
 
 export default {
+  components: {
+    CustomPagination,
+  },
   data() {
     return {
       employees: [],
@@ -57,43 +66,42 @@ export default {
         direction: 'asc'
       },
       searchQuery: '',
+      page: 1,
+      pageSize: 2,
+      totalEmployees: 0,  
       showToast: useToast()
     };
   },
   async created() {
     document.addEventListener('keydown', this.handleKeydown)
-    this.employees = (await EmployeeService.getAllEmployees()).data
+    this.loadEmployees();
   },
   unmounted() {
     document.removeEventListener('keydown', this.handleKeydown)
   },
   computed: {
-    // return a filtered list of employees based on the search query
     filteredEmployees() {
-      const employees = [...this.employees]
-      const field = this.sorting.field
-      const direction = this.sorting.direction === 'asc' ? 1 : -1
-      employees.sort((a, b) => {
-        if (field === 'workshop.name') {
-          a = a.workshop.name
-          b = b.workshop.name
-        } else {
-          a = a[field].toLowerCase()
-          b = b[field].toLowerCase()
-        }
-        if (a < b) {
-          return -direction
-        }
-        if (a > b) {
-          return direction
-        }
-        return 0
-      })
-      
-      return employees.filter(employee => employee.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
-    }
+      return this.employees;
+    },
+    totalPages() {
+      return Math.ceil(this.totalEmployees / this.pageSize);
+    },
   },
   methods: {
+    // load all employees.
+    async loadEmployees() {
+      console.log("Employees Loaded")
+      const response = await EmployeeService.getAllEmployees(
+        this.page,
+        this.pageSize,
+        this.searchQuery,
+        this.sorting.field,
+        this.sorting.direction.toLowerCase()
+      );
+      console.log(response.data);
+      this.employees = response.data;
+      this.totalEmployees = response.headers['x-total-count'];
+    },
     // redirect to the create employee page
     createEmployee() {
       this.$router.push('/employees/create');
@@ -116,6 +124,8 @@ export default {
         this.sorting.field = field
         this.sorting.direction = 'asc'
       }
+
+      this.loadEmployees();
     },
     handleKeydown(event) {
       const isSearchInput =  event.target.id === 'searchQuery';
@@ -139,7 +149,17 @@ export default {
           document.getElementById('searchQuery').focus();
           break;
       }
+    },
+    // Search employee
+    async search() {
+      this.page = 1;
+      this.totalEmployees = 0;
+      await this.loadEmployees();
+    },
+    async pageChanged(page) {
+      this.page = page;
+      await this.loadEmployees();
     }
-  }
+  },
 };
 </script>

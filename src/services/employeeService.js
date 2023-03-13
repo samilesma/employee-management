@@ -10,8 +10,25 @@ const apiClient = axios.create({
 
 export default {
   // Get all employees
-  getAllEmployees() {
-    return apiClient.get('/employees?_expand=workshop');
+  getAllEmployees(page, pageSize, searchQuery, orderByField, orderByDirection) {
+    let url = `/employees?_expand=workshop`;
+  
+    url += `&_page=${page}&_limit=${pageSize}`;
+  
+    if (searchQuery) {
+      url += `&name_like=${searchQuery}`;
+    }
+  
+    if (orderByField && orderByDirection) {
+      if (orderByField === 'workshop.name') {
+        console.log("gafd");
+        url += `&_expand=workshop&_sort=workshop.name&_order=${orderByDirection}`;
+      } else {
+        url += `&_sort=${orderByField}&_order=${orderByDirection}`;
+      }
+    }
+  
+    return apiClient.get(url);
   },
   // Get an employee by ID
   getEmployee(id) {
