@@ -12,7 +12,7 @@ export default {
   // Get all employees
   getAllEmployees(page, pageSize, searchQuery, orderByField, orderByDirection) {
     let url = `/employees?_expand=workshop`;
-  
+    
     url += `&_page=${page}&_limit=${pageSize}`;
   
     if (searchQuery) {
@@ -21,7 +21,6 @@ export default {
   
     if (orderByField && orderByDirection) {
       if (orderByField === 'workshop.name') {
-        console.log("gafd");
         url += `&_expand=workshop&_sort=workshop.name&_order=${orderByDirection}`;
       } else {
         url += `&_sort=${orderByField}&_order=${orderByDirection}`;

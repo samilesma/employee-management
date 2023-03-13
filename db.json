@@ -5,17 +5,44 @@
       "name": "Jane Smith",
       "title": "Sales Associate",
       "function": "Driver",
-      "workshopId": 1
+      "workshopId": 1,
+      "workshop": {
+        "id": 1,
+        "name": "Værksted A"
+      }
     },
     {
       "name": "Sibgatullah Samil Batir",
       "title": "Test",
-      "department": "",
-      "phone": "",
-      "email": "",
       "workshopId": 2,
       "function": "Leder",
-      "id": 5
+      "id": 5,
+      "workshop": {
+        "id": 2,
+        "name": "Værksted B"
+      }
+    },
+    {
+      "name": "Test",
+      "title": "123",
+      "function": "teadfa",
+      "workshopId": 3,
+      "id": 6,
+      "workshop": {
+        "id": 3,
+        "name": "Værksted C"
+      }
+    },
+    {
+      "name": "Emil",
+      "title": "Test",
+      "function": "Mekaniker",
+      "workshopId": 2,
+      "id": 7,
+      "workshop": {
+        "id": 2,
+        "name": "Værksted B"
+      }
     }
   ],
   "workshops": [
